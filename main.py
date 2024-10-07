@@ -21,12 +21,21 @@ df = pd.DataFrame(json_data)
 for monthlyData in df.stn.data:
     month = monthlyData['month']
     print (month)
+    
     if not monthlyData['dayData'] is None and monthlyData['dayData']:
 #        plt.plot(monthlyData['dayData'][0], monthlyData['dayData'][3])
-        plt.bar(monthlyData['dayData'][0], monthlyData['dayData'][3], color ='maroon', 
-        width = 0.4)
+        dayArray = list()
+        avgTempArray = list()
+        for dayData in monthlyData['dayData']:
+            if dayData[0].isnumeric():
+                dayArray.append(dayData[0])
+                avgTempArray.append(float(dayData[3]))
+        plt.bar(np.asarray(dayArray, float), avgTempArray, color ='maroon', 
+        width = 0.6)
         plt.xlabel(f"Day in month {month}")
         plt.ylabel("Temperature (avg)")
+        plt.tick_params(which='major', length=7)
+
         plt.title("Students enrolled in different courses")
 
         plt.show()
@@ -48,4 +57,4 @@ for monthlyData in jsonpath_expression.find(json_data):
         print(f'data: {dailyData.value}')
 
  """
-# %%
+        # %%
